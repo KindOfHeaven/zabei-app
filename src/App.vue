@@ -65,13 +65,13 @@
       </div>
     </div>
     <footer class="footer">
-      <button v-if="currentStep !== 3" class="button button_back" v-show="!!currentStep" @click="changeStep(currentStep-1)">Вернуться</button>
-      <button v-if="currentStep !== 3" class="button" :disabled="disallowNextStep" :class="{'button_active': !disallowNextStep}" @click="changeStep(currentStep+1)">{{ currentStep === 2 ? 'Забронировать' : 'Продолжить' }}</button>
-      <div v-if="currentStep === 2" class="form__policy">Нажимая на кнопку “Забронировать”
+      <button v-show="currentStep !== 3 && !!currentStep" class="button button_back" @click="changeStep(currentStep-1)">Вернуться</button>
+      <button v-show="currentStep !== 3" class="button" :disabled="disallowNextStep" :class="{'button_active': !disallowNextStep}" @click="changeStep(currentStep+1)">{{ currentStep === 2 ? 'Забронировать' : 'Продолжить' }}</button>
+      <div v-show="currentStep === 2" class="form__policy">Нажимая на кнопку “Забронировать”
         вы соглашаетесь <a :href="policyLink">с условиями
           пользовательского соглашения</a></div>
       <div class="footer__copyright" v-if="currentStep > 1">
-        <img src="./assets/images/logo.png" alt="Zabei.app">
+        <img src="./assets/images/logo.svg" alt="Zabei.app">
         <div class="footer__copyright__text">Система бронирования столиков - <a :href="sourceLink" target="_blank">Zabei.app</a></div>
       </div>
     </footer>
@@ -229,7 +229,11 @@
           this.$store.dispatch('changeDay', day)
       },
       closeSelf () {
-          parent.window.postMessage("close", "*");
+          if (this.currentStep === 3) {
+              parent.window.postMessage("remove", "*");
+          } else {
+              parent.window.postMessage("close", "*");
+          }
       }
     },
     mounted() {
@@ -247,6 +251,16 @@
 
         window.addEventListener('load', () => {
             this.$store.commit('changeLoading')
+        })
+
+        document.addEventListener('click', (e) => {
+            if (!document.getElementById('zabeiApp').contains(e.target)) {
+                if (this.currentStep === 3) {
+                    parent.window.postMessage("remove", "*");
+                } else {
+                    parent.window.postMessage("close", "*");
+                }
+            }
         })
     }
   }
@@ -282,11 +296,11 @@
       height: auto;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
-      max-width: 400px;
+      max-width: 500px;
     }
 
     @media (max-width: 500px) {
-      border-radius: 10px 10px 0 0;
+      border-radius: 0 0 10px 10px;
     }
 
     @media (max-height: 500px)  {

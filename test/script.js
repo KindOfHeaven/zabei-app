@@ -29,9 +29,9 @@
             overlay.style.justifyContent = 'center'
 
             wrapper.classList.add('zabei-iframe-wrapper')
-            wrapper.style.width = '320px'
-            wrapper.style.maxHeight = 'calc(100vh - 50px)'
-            wrapper.style.borderRadius = '10px'
+            wrapper.style.width = '100%'
+            wrapper.style.height = '100%'
+            // wrapper.style.borderRadius = '10px'
             wrapper.style.display = 'flex'
             wrapper.style.alignItems = 'center'
             wrapper.style.justifyContent = 'center'
@@ -54,10 +54,8 @@
             loader.appendChild(loaderText)
 
             iframe.setAttribute('id', 'zabei-reserved-frame')
-            iframe.setAttribute('width', 320)
-            iframe.setAttribute('height', 800)
             iframe.setAttribute('src', `${url}/?restaurant-id=${el.getAttribute('zabeiapp-restaurant-id')}`)
-            iframe.style.borderRadius = '10px'
+            // iframe.style.borderRadius = '10px'
             iframe.style.border = 'none'
             iframe.style.display = 'none'
 
@@ -84,7 +82,8 @@
                          #zabei-reserved-frame {
                             position: relative;
                             z-index: 2;
-                            height: calc(100vh - 50px);
+                            width: 100%;
+                            height: 100%;
                          }
                          .zabey-overlay__closer {
                             position: absolute;
@@ -121,20 +120,30 @@
                             
                          .zabey-loader {
                             height: 450px;
-                            width: 100%;
+                            width: 320px;
                             display: flex;
                             flex-direction: column;
                             align-items: center;
                             justify-content: center;
                             position: absolute;
-                            flex: 0 0 100%;
-                            max-width: 100%;
+                            flex: 0 0 320px;
+                            max-width: 320px;
                             top: calc(50% - 225px);
-                            left: 0;
+                            left: calc(50% - 160px);
                             z-index: 3;
                             background: #2d2d2d;
                             border-radius: 10px;
                          }   
+                         
+                            @media (max-width: 500px) {
+                                .zabey-loader {
+                                    width: 100%;
+                                    max-width: 100%;
+                                    left: 0;
+                                    top: 0;
+                                    flex: 0 0 100%;
+                                }
+                            }
                          .zabey-loader__inner {
                             width: 50px;
                             height: 50px;
@@ -213,9 +222,16 @@
         if (data === 'close') {
             closeZabeiIframe()
         }
+
+        if (data === 'remove') {
+            removeZabeiIframe()
+        }
     });
 
     function closeZabeiIframe() {
         document.querySelector('.zabei-overlay').style.display = 'none'
+    }
+    function removeZabeiIframe() {
+        document.querySelector('.zabei-overlay').remove()
     }
 }
