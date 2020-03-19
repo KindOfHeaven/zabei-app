@@ -68,11 +68,11 @@
       <button v-if="currentStep !== 3" class="button button_back" v-show="!!currentStep" @click="changeStep(currentStep-1)">Вернуться</button>
       <button v-if="currentStep !== 3" class="button" :disabled="disallowNextStep" :class="{'button_active': !disallowNextStep}" @click="changeStep(currentStep+1)">{{ currentStep === 2 ? 'Забронировать' : 'Продолжить' }}</button>
       <div v-if="currentStep === 2" class="form__policy">Нажимая на кнопку “Забронировать”
-        вы соглашаетесь <a href="javascript:void(0)">с условиями
+        вы соглашаетесь <a :href="policyLink">с условиями
           пользовательского соглашения</a></div>
       <div class="footer__copyright" v-if="currentStep > 1">
         <img src="./assets/images/logo.png" alt="Zabei.app">
-        <div class="footer__copyright__text">Система бронирования столиков - <a href="https://zabei.app" target="_blank">Zabei.app</a></div>
+        <div class="footer__copyright__text">Система бронирования столиков - <a :href="sourceLink" target="_blank">Zabei.app</a></div>
       </div>
     </footer>
     <div class="closer" @click="closeSelf"></div>
@@ -101,6 +101,8 @@
           currentDate: new Date(),
           monthAmount: vars.monthAmount,
           maxAmount: vars.maxAmount,
+          policyLink: vars.policyLink,
+          sourceLink: vars.sourceLink,
           phoneInput: {
               type: 'tel',
               id: 'phone',

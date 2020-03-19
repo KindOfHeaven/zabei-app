@@ -76,7 +76,7 @@ export default new Vuex.Store({
 
           if (payload < state.currentStep) {
               const currentDate = new Date()
-              dispatch('changeMonth', currentDate.getMonth() - state.order.date.getMonth())
+              dispatch('changeMonth', state.order.date.getMonth() - currentDate.getMonth())
           }
 
           if (payload === 1) {

@@ -84,6 +84,7 @@
                          #zabei-reserved-frame {
                             position: relative;
                             z-index: 2;
+                            height: calc(100vh - 50px);
                          }
                          .zabey-overlay__closer {
                             position: absolute;
