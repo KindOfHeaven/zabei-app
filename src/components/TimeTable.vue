@@ -4,11 +4,11 @@
     <div v-if="!loadingTime" class="time-table__inner">
       <div class="time-table__title">{{ title }}</div>
       <div class="time-table__content">
-        <a href="javascript:void(0)" class="arrow arrow_left" :class="{'arrow_disabled': (!currentMonth && currentDate.getDate() === order.date.getDate() && !dayPart) || loadingTime}" @click.prevent="changeDayPart(dayPart - 1)"></a>
+        <a href="javascript:void(0)" class="arrow arrow_left" :class="{'arrow_disabled': (!currentMonth && currentDate.getDate() === order.date.getDate() && !dayPart) || loadingTime}" @click="changeDayPart(dayPart - 1)"></a>
         <div class="time-table__table">
           <div class="time-table__time" :class="{'time-table__time_inactive': time[1] < order.amountOfPeople, 'time-table__time_active': time[0] === order.time[0]}" v-for="time in timeTable" :key="+(time[0]+'').replace(':','')" @click="chooseTime(time)">{{ time[0] }}</div>
         </div>
-        <a href="javascript:void(0)" class="arrow" :class="{'arrow_disabled': (currentMonth === monthAmount && order.date.getDate() === month.end && dayPart === 3) || loadingTime}" @click.prevent="changeDayPart(dayPart + 1)"></a>
+        <a href="javascript:void(0)" class="arrow" :class="{'arrow_disabled': (currentMonth === monthAmount && order.date.getDate() === month.end && dayPart === 3) || loadingTime}" @click="changeDayPart(dayPart + 1)"></a>
       </div>
       <div class="time-table__info">
         <div class="time-table__reserved" v-if="order.time.length">
@@ -77,7 +77,7 @@
         methods: {
             changeDayPart (payload) {
                 this.$store.dispatch('changeDayPart', payload)
-                parent.window.postMessage(`height${document.getElementById('zabeiApp').offsetHeight}`, "*");
+                // parent.window.postMessage(`height${document.getElementById('zabeiApp').offsetHeight}`, "*");
             },
             chooseTime (payload) {
                 this.$store.commit('chooseTime', payload)

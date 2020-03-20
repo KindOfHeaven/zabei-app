@@ -203,9 +203,11 @@
           this.$store.dispatch('changeStep', step)
 
           if (step === 3) {
+              let tzoffset = (new Date()).getTimezoneOffset() * 60000
+              let day = (new Date(this.order.date - tzoffset))
               this.$store.commit('changeLoadingTime', true)
               this.$store.dispatch('sendData', {
-                  timeFrom: `${this.order.date.toISOString().slice(0, 10)} ${this.order.time[0]}`,
+                  timeFrom: `${day.toISOString().slice(0, 10)} ${this.order.time[0]}`,
                   guests: this.order.amountOfPeople,
                   name: this.name,
                   phone: this.phone,
@@ -227,6 +229,16 @@
       },
       changeDay (day) {
           this.$store.dispatch('changeDay', day)
+          if (this.order.time) {
+             let options = {
+                 month: 'long',
+                 day: 'numeric',
+             }
+             if (new Date(new Date().toLocaleString("en-US", options) + ', ' + new Date().toLocaleString("ru", {year: 'numeric'}) + ' ' + this.$store.state.order.time[0] + ':00') < new Date()) {
+                 this.$store.commit('chooseTime', [])
+             }
+          }
+
       },
       closeSelf () {
           if (this.currentStep === 3) {
@@ -254,7 +266,7 @@
         })
 
         document.addEventListener('click', (e) => {
-            if (!document.getElementById('zabeiApp').contains(e.target)) {
+            if (e.target.nodeName === 'BODY') {
                 if (this.currentStep === 3) {
                     parent.window.postMessage("remove", "*");
                 } else {

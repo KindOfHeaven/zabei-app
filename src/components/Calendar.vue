@@ -46,6 +46,7 @@
     grid-auto-rows: 24px;
     grid-gap: 8px;
     margin-top: 30px;
+    justify-items: center;
 
     &__day {
       border: 0.7px solid $white;
@@ -54,6 +55,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      max-width: 31px;
+      width: 31px;
+      flex: 0 0 31px;
 
       cursor: pointer;
       font-size: 13px;
