@@ -54,7 +54,7 @@
             loader.appendChild(loaderText)
 
             iframe.setAttribute('id', 'zabei-reserved-frame')
-            iframe.setAttribute('src', `${url}/?restaurant-id=${el.getAttribute('zabeiapp-restaurant-id')}`)
+            iframe.setAttribute('src', `${url}?restaurant-id=${el.getAttribute('zabeiapp-restaurant-id')}`)
             // iframe.style.borderRadius = '10px'
             iframe.style.border = 'none'
             iframe.style.display = 'none'
